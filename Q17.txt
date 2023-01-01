@@ -1,9 +1,3 @@
-17. Consider a student database of SEIT class (at least 15 records). Database contains
-different fields of every student like Roll No, Name and SGPA. (array of structure)
-b) Arrange list of students alphabetically. (Use Insertion sort)
-c) Arrange list of students to find out first ten toppers from a class. (Use Quick sort)
-(all the student records having the presence of search key should be displayed) 
-
 #include<iostream>
 #include<string.h>
 #include<conio.h>
