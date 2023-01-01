@@ -1,5 +1,3 @@
-9. Implement Heap sort to sort given set of values using max or min heap.
-
 #include <iostream>
 using namespace std;
 void maxheapify(int a[], int i, int n){
