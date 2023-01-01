@@ -1,0 +1,92 @@
+7. Represent a graph of your college campus using adjacency list /adjacency matrix. Nodes should represent the
+various departments/institutes and links should represent the distance between them. Find minimum spanning
+tree a) Using Prim’s algorithm.
+
+#include <iostream>
+using namespace std;
+class graph {
+int g[20][20], n;
+public:
+void accept() {
+int i, j, e;
+int src, dest, cost;
+cout << "\nenter the no. of vertices: ";
+cin >> n;
+for (i = 0; i < n; i++) {
+for (j = 0; j < n; j++){
+g[i][j] = 0;
+}
+}
+cout << "\nenter the no. of edges: ";
+cin >> e;
+for (i = 0; i < e; i++){
+cout << "\nenter source: ";
+cin >> src;
+cout << "\ndestination: ";
+cin >> dest;
+cout << "\ncost: ";
+cin >> cost;
+g[src][dest] = cost;
+g[dest][src] = cost;
+}
+}
+void display(){
+int i, j;
+for (i = 0; i < n; i++){
+cout << "\n";
+for (j = 0; j < n; j++){
+cout << "\t" << g[i][j];
+}
+}
+}
+void prims() {
+int i, j, r[20][20];
+int src, dest, cost, count, min;
+int total = 0;
+int visited[20];
+for (i = 0; i < n; i++){
+for (j = 0; j < n; j++){
+if (g[i][j] == 0){
+r[i][j] = 999;
+}
+else
+r[i][j] = g[i][j];
+}
+}
+for (i = 0; i < n; i++) {
+
+visited[i] = 0;
+}
+cout << "\nenter start vertex: ";
+cin >> src;
+visited[src] = 1;
+count = 0;
+while (count < n - 1) {
+min = 999;
+for (i = 0; i < n; i++){
+if (visited[i] == 1)
+for (j = 0; j < n; j++){
+if (visited[j] != 1){
+if (min > r[i][j]){
+min = r[i][j];
+src = i;
+dest = j;
+}
+}
+}
+}
+cout << "\nedge from " << src << " to " << dest << " \twith cost: " <<
+min;
+total = total + min;
+visited[dest] = 1;
+count++;
+}
+cout << "\ntotal cost: " << total << "\n";
+}
+};
+int main() {
+graph g;
+g.accept();
+g.display();
+g.prims();
+}

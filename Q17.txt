@@ -1,0 +1,121 @@
+17. Consider a student database of SEIT class (at least 15 records). Database contains
+different fields of every student like Roll No, Name and SGPA. (array of structure)
+b) Arrange list of students alphabetically. (Use Insertion sort)
+c) Arrange list of students to find out first ten toppers from a class. (Use Quick sort)
+(all the student records having the presence of search key should be displayed) 
+
+#include<iostream>
+#include<string.h>
+#include<conio.h>
+using namespace std;
+struct student{
+int roll_no;
+char name[50];
+float mark;
+}s;
+void create_database(student s[],int n){
+cout<<endl;
+for(int i=0;i<n;i++){
+cout<<"student "<<i+1<<" :"<<endl;
+cout<<"enter the name = ";
+cin>>s[i].name;
+cout<<"enter the roll no = ";
+cin>>s[i].roll_no;
+cout<<"enter the marks = ";
+cin>>s[i].mark;
+cout<<endl;
+for(int j=i-1;j>=0;j--){
+if(s[i].roll_no==s[j].roll_no){
+i--;
+cout<<"enter the unique roll no."<<endl;
+break;
+}
+}
+}
+}
+void display_data(student s[],int n){
+cout<<"roll no: "<<"\t\tname: "<<"\t\t\tmarks: "<<endl;
+for(int i=0;i<n;i++){
+cout<<s[i].roll_no<<"\t\t\t"<<s[i].name<<"\t\t\t"<<s[i].mark<<endl;
+}
+cout<<endl;
+cout<<"* information displayed succesfully !! *"<<endl;
+cout<<"\npress any key to move further";
+getch();
+cout<<endl;
+}
+void insertion_sort(student s[],int n){
+student key;
+for(int i =1;i<n;i++){
+
+key=s[i];
+int j=i-1;
+while(j>=0 && strcmp(s[j].name,key.name)>0){
+s[j+1]=s[j];
+j=j-1;
+}
+s[j+1]=key;
+}
+cout<<"* information sorted succesfully !! *"<<endl;
+display_data(s,n);
+}
+int partition (student s[], int low, int high) {
+int pivot = s[high].mark;
+int i = (low - 1);
+for (int j = low; j <= high - 1; j++){
+if (s[j].mark < pivot) {
+i++;
+student temp;
+temp = s[i];
+s[i]=s[j];
+s[j]=temp;
+}
+}
+student temp1;
+temp1=s[i+1];
+s[i+1]=s[high];
+s[high]=temp1;
+return (i + 1);
+}
+void quick_sort(student s[], int low, int high) {
+if (low < high){
+int pi = partition(s, low, high);
+quick_sort(s, low, pi - 1);
+quick_sort(s, pi + 1, high);
+}
+}
+int main(){
+struct student s[20];
+int resp,n;
+while(true){
+cout<<"1.create database\n2.display database\n3.top 10 students in class\n4.sort by name\n5.exit\n";
+cin>>resp;
+switch(resp){
+case 1:
+cout<<endl;
+cout<<"enter the number of students = ";
+cin>>n;
+create_database(s,n);
+break;
+case 2:
+cout<<endl;
+display_data(s,n);
+break;
+case 3:
+quick_sort(s,0,n-1);
+
+cout<<"\n** information sorted succesfully !! **"<<endl;
+display_data(s,n);
+break;
+case 4:
+cout<<endl;
+insertion_sort(s,n);
+break;
+case 5:
+return 0;
+default:
+cout<<"enter the correct choice"<<endl;
+}
+}
+return 0;
+}

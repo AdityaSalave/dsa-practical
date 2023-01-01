@@ -1,0 +1,171 @@
+15. Consider a student database of SEIT class (at least 15 records). Database contains different fields of every
+student like Roll No, Name and SGPA.(array of structure) a) Design a roll call list, arrange list of students
+according to roll numbers in ascending order (Use Bubble Sort) b) Search a particular student according to name
+using binary search without recursion. (all the student records having the presence of search key should be
+displayed)
+
+
+#include<iostream>
+#include<string.h>
+#include<conio.h>
+using namespace std;
+struct student{
+int roll_no;
+char name[50];
+float mark;
+}s;
+void create_database(student s[],int n){
+cout<<endl;
+for(int i=0;i<n;i++){
+cout<<"student "<<i+1<<" :"<<endl;
+cout<<"enter the name = ";
+cin>>s[i].name;
+cout<<"enter the roll no = ";
+cin>>s[i].roll_no;
+cout<<"enter the marks = ";
+cin>>s[i].mark;
+cout<<endl;
+for(int j=i-1;j>=0;j--){
+if(s[i].roll_no==s[j].roll_no){
+i--;
+cout<<"enter the unique roll no."<<endl;
+break;
+}
+}
+}
+}
+void display_data(student s[],int n){
+cout<<"roll no: "<<"\t\tname: "<<"\t\t\tmarks: "<<endl;
+for(int i=0;i<n;i++){
+cout<<s[i].roll_no<<"\t\t\t"<<s[i].name<<"\t\t\t"<<s[i].mark<<endl;
+}
+cout<<endl;
+cout<<"* information displayed succesfully !! *"<<endl;
+cout<<"\npress any key to move further";
+getch();
+cout<<endl;
+}
+int partition (student s[], int low, int high) {
+int pivot = s[high].mark;
+int i = (low - 1);
+for (int j = low; j <= high - 1; j++){
+if (s[j].mark < pivot) {
+i++;
+student temp;
+
+temp = s[i];
+s[i]=s[j];
+s[j]=temp;
+}
+}
+student temp1;
+temp1=s[i+1];
+s[i+1]=s[high];
+s[high]=temp1;
+return (i + 1);
+}
+void bubble_sort(student s[],int n){
+student temp;
+int counter = 1;
+while (counter <n){
+for(int i=0;i<n;i++){
+if(s[i].roll_no>s[i+1].roll_no){
+temp = s[i];
+s[i] = s[i+1];
+s[i+1] = temp;
+}
+}
+counter ++;
+}
+cout<<endl;
+cout<<"* information sorted succesfully !! *"<<endl;
+display_data(s,n);
+}
+void insertion_sort(student s[],int n){
+student key;
+for(int i =1;i<n;i++){
+key=s[i];
+int j=i-1;
+while(j>=0 && strcmp(s[j].name,key.name)>0){
+s[j+1]=s[j];
+j=j-1;
+}
+s[j+1]=key;
+}
+cout<<"* information sorted succesfully !! *"<<endl;
+display_data(s,n);
+}
+void binarysearch(student s[],int n){
+insertion_sort(s, n);
+cout<<endl;
+string key;
+cout<<"enter the name to be found = ";
+cin>>key;
+cout<<endl;
+int start = 0;
+int end = n ;
+bool flag=true;
+cout<<"roll no: "<<"\t\tname: "<<"\t\t\tmarks: "<<endl;
+while( start <= end){
+int mid = (start + end)/2;
+
+if(s[mid].name==key){
+flag=false;
+while(s[mid].name==key){
+cout<<s[mid].roll_no<<"\t\t\t"<<s[mid].name<<"\t\t\t"<<s[mid].mark<<endl;
+mid--;
+}
+while(s[mid].name==key){
+cout<<s[mid].roll_no<<"\t\t\t"<<s[mid].name<<"\t\t\t"<<s[mid].mark<<endl;
+mid++;
+}
+return;
+}
+else if(s[mid].name<key){
+start=mid+1;
+}
+else{
+end=mid-1;
+}
+cout<<"\npress any key to continue "<<endl;
+getch();
+}
+if(flag){
+cout<<"na"<<"\t\t\t"<<"na"<<"\t\t\t"<<"na"<<endl;
+cout<<"no data found of entered marks"<<endl;
+}
+cout<<endl;
+}
+int main(){
+struct student s[20];
+int resp,n;
+while(true){
+cout<<"1.create database\n2.display database\n3.sort according to roll no.\n4.search by name\n5.exit\n";
+cin>>resp;
+switch(resp){
+case 1:
+cout<<endl;
+cout<<"enter the number of students = ";
+cin>>n;
+create_database(s,n);
+break;
+case 2:
+cout<<endl;
+display_data(s,n);
+break;
+case 3:
+cout<<endl;
+bubble_sort(s,n);
+break;
+case 4:
+binarysearch(s,n);
+break;
+case 5:
+return 0;
+default:
+
+cout<<"enter the correct choice"<<endl;
+}
+}
+return 0;
+}
